@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest identifier="minimal-scorm-quiz"
+  version="1.0"
+  xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
+  xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd
+    http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+
+  <metadata>
+    <schema>ADL SCORM</schema>
+    <schemaversion>1.2</schemaversion>
+  </metadata>
+
+  <organizations default="quiz-org">
+    <organization identifier="quiz-org">
+      <title>Minimal SCORM Quiz</title>
+      <item identifier="quiz-item" identifierref="quiz-resource">
+        <title>Minimal SCORM Quiz</title>
+      </item>
+    </organization>
+  </organizations>
+
+  <resources>
+    <resource identifier="quiz-resource"
+      type="webcontent"
+      adlcp:scormtype="sco"
+      href="index.html">
+      <file href="index.html" />
+      <file href="scormdriver.js" />
+    </resource>
+  </resources>
+</manifest>
