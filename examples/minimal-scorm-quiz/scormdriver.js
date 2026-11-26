@@ -1,36 +1,40 @@
 (function () {
-  function findApi(win) {
+  function findApiInParents(win) {
     var maxTries = 20;
     var current = win;
     var tries = 0;
 
     while (current && tries < maxTries) {
-      if (current.API) {
-        return current.API;
-      }
-      tries += 1;
-      if (current.parent && current.parent !== current) {
-        current = current.parent;
-      } else {
-        break;
-      }
-    }
-
-    current = win.opener;
-    tries = 0;
-    while (current && tries < maxTries) {
-      if (current.API) {
-        return current.API;
-      }
-      tries += 1;
-      if (current.parent && current.parent !== current) {
-        current = current.parent;
-      } else {
+      try {
+        if (current.API) {
+          return current.API;
+        }
+        tries += 1;
+        if (current.parent && current.parent !== current) {
+          current = current.parent;
+        } else {
+          break;
+        }
+      } catch (error) {
+        // An LMS may embed the SCO below a cross-origin frame. That frame
+        // cannot be inspected; keep browser-only preview available.
         break;
       }
     }
 
     return null;
+  }
+
+  function findApi(win) {
+    var api = findApiInParents(win);
+    if (api) {
+      return api;
+    }
+    try {
+      return findApiInParents(win.opener);
+    } catch (error) {
+      return null;
+    }
   }
 
   function createDriver() {
